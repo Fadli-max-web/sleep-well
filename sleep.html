@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ucapan Selamat Malam</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #ffd1dc, #ffe6f0);
+      color: #4b003d;
+      overflow: hidden;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(#ffffff 1px, transparent 1px);
+      background-size: 40px 40px;
+      animation: moveStars 80s linear infinite;
+      z-index: 1;
+      opacity: 0.15;
+    }
+
+    @keyframes moveStars {
+      from { background-position: 0 0; }
+      to { background-position: 1000px 1000px; }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .content {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #d63384;
+      animation: fadeIn 2s forwards;
+    }
+
+    p.subtitle {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      color: #6e0033;
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+      animation-delay: 1s;
+    }
+
+    .glow-button {
+      padding: 12px 25px;
+      font-size: 1em;
+      color: white;
+      background: #e83e8c;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      box-shadow: 0 0 10px #e83e8c, 0 0 20px #f8a5c2;
+      animation: fadeIn 2s forwards;
+      animation-delay: 2s;
+      opacity: 0;
+    }
+
+    .glow-button:hover {
+      background: #ff69b4;
+      box-shadow: 0 0 15px #ffaad4, 0 0 30px #ffd1e8;
+    }
+
+    #messageContainer {
+      margin-top: 25px;
+      max-height: 300px;
+      overflow-y: auto;
+      text-align: left;
+      padding-right: 10px;
+      scroll-behavior: smooth;
+    }
+
+    #message {
+      font-size: 1.05em;
+      color: #5c0030;
+      white-space: pre-line;
+      line-height: 1.6;
+    }
+
+    #messageContainer::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #messageContainer::-webkit-scrollbar-thumb {
+      background-color: #f49ac2;
+      border-radius: 3px;
+    }
+
+    .typing {
+      border-right: 2px solid #d63384;
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #d63384; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .content {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2.2em;
+      }
+
+      #message {
+        font-size: 1em;
+      }
+
+      .glow-button {
+        padding: 10px 20px;
+        font-size: 0.95em;
+      }
+
+      #messageContainer {
+        max-height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+
+  <div class="wrapper">
+    <div class="content">
+      <h1>Selamat Malam</h1>
+      <p class="subtitle">haii.. selamat malem wahai adkel ku yang kadang ngeselin🖐️</p>
+      <button id="specialBtn" onclick="showLongMessage()" class="glow-button">click untuk lanjut</button>
+
+      <div id="messageContainer">
+        <div id="message"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const longText = `
+selamat malam yaa.. semoga setelah hari yang panjang dan mungkin sedikit melelahkan, malam ini waktu yang pass buat istirahat dan nenangin isi pikiran, gapapaa kalau hari ini terasa capee, yang penting kamu udaa nyoba dan tetepp jalanin semuanyaa sebisa kamu.😊
+
+kadang hidup emangg gaa selalu muluss, tapi percayalah tiap hari yang kita yng lewatinn, sekacau apapun itu, tetep punya arti tersendirii. istirahat yang cukup malamm inii yaaa, biar besok bisa mulai lagi kesehariannya dengan tenaga baru dan hati yang lebih ringann.😉
+
+semoga malamm ini nyenengin, bisa tidur nyenyak, dan kalau mimpii, semoga mimpinya yang indah dan bikin kamu happy yapss.. jaga diri baik baik, dan jangan lupa besok pasti ada hal baik yang nuggu kamuu. good night and sweet dreams.😁
+`;
+
+    let typingTimeout;
+
+    function typeText(text, element) {
+      clearTimeout(typingTimeout);
+      element.innerHTML = "";
+      let i = 0;
+
+      function typing() {
+        if (i <= text.length) {
+          element.innerHTML = text.substring(0, i) + "<span class='typing'></span>";
+          i++;
+          typingTimeout = setTimeout(typing, 30);
+        } else {
+          element.innerHTML = text;
+        }
+      }
+
+      typing();
+    }
+
+    function showLongMessage() {
+      const btn = document.getElementById("specialBtn");
+      const messageEl = document.getElementById("message");
+
+      btn.style.display = "none";
+      typeText(longText, messageEl);
+    }
+  </script>
+</body>
+</html>
